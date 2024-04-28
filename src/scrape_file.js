@@ -1,7 +1,10 @@
 const { chromium } = require('playwright');
 
 async function main(noticeNumber, taxPayerID) {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.connect({
+    wsEndpoint: 'wss://your-railway-app.railway.app/playwright?token=YOUR_TOKEN',
+  });
+
   const context = await browser.newContext();
   const page = await context.newPage();
 
@@ -40,6 +43,7 @@ async function main(noticeNumber, taxPayerID) {
   } else {
     console.log(issueDate, date, issuedTo, issuedToName, caption2);
   }  
+
   await browser.close();
 }
 
